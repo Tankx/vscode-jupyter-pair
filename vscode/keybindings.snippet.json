@@ -1,0 +1,7 @@
+[
+    {
+        "key": "ctrl+alt+j",
+        "command": "workbench.action.tasks.runTask",
+        "args": "jupytext sync"
+    }
+]

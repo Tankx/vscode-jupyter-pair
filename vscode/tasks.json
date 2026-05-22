@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "jupytext sync",
+            "detail": "Pair + sync every .ipynb in the workspace with its .py twin",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "-c",
+                "import glob, subprocess, sys; files = sorted(glob.glob('**/*.ipynb', recursive=True)); files = [f for f in files if '.ipynb_checkpoints' not in f]; print('No .ipynb files in workspace.') if not files else subprocess.run(['jupytext','--set-formats','ipynb,py:percent','--sync',*files])"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
