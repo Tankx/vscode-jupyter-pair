@@ -1,8 +1,8 @@
 # Jupytext-paired notebooks — workflow for Claude
 
-> Not auto-loaded. The user points Claude at this file explicitly ("follow
-> these instructions for this project") when they want this workflow
-> applied. Treat it as a referenced behaviour spec.
+> Loaded by the `jupyter-pair` skill (from the `claude-setup` repo) whenever a
+> task touches a notebook or a paired `.py`, or pointed at by hand. Treat it as
+> a referenced behaviour spec.
 
 This project uses **jupytext** to pair every `.ipynb` notebook with a `.py`
 in the "percent" format. The `.py` is the **canonical, committed** artefact;

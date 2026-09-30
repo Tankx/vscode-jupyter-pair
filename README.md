@@ -13,8 +13,8 @@ auto-sync. Claude can sync too.
 - **Git only sees `.py`** — clean line diffs, no JSON noise, no notebook outputs in history.
 - **Claude's edits appear in your open notebook view automatically** via the
   Notebook Hot Reload extension — no manual revert/reopen.
-- **Claude knows the workflow.** Point Claude at `claude-instructions.md`
-  and it will run `jupytext --sync` before reading or editing paired
+- **Claude knows the workflow.** The `jupyter-pair` skill (installed by the
+  `claude-setup` repo) loads `claude-instructions.md` automatically, so Claude will run `jupytext --sync` before reading or editing paired
   files, and warn when a kernel restart is needed.
 - **Manual fallback: Ctrl+Alt+J** force-syncs the workspace from anywhere
   (useful if the watcher isn't running).
@@ -29,7 +29,7 @@ auto-sync. Claude can sync too.
 | `watch.py` | The background watcher. Watches the project tree for `.ipynb` changes; runs `jupytext --set-formats --sync` on each save with a small debounce. Re-pairing on every event defeats VSCode's metadata stripping. |
 | `vscode/tasks.json` | User-level "jupytext sync" task for the manual fallback (Ctrl+Alt+J). The installer copies this into `%APPDATA%\Code\User\tasks.json` (merging if needed). |
 | `vscode/keybindings.snippet.json` | The Ctrl+Alt+J binding to merge into `%APPDATA%\Code\User\keybindings.json`. |
-| `claude-instructions.md` | Reference file you point Claude at when you want it to follow this workflow on a project. Not auto-loaded. |
+| `claude-instructions.md` | The workflow spec for Claude. Loaded automatically by the `jupyter-pair` skill from the `claude-setup` repo; without it, point Claude at this file by hand. |
 
 ## Two deployment patterns
 
@@ -152,9 +152,14 @@ Three places state lives, and the gotchas are all about disconnects between them
 
 ## Use with Claude
 
-`claude-instructions.md` is the file you point Claude at when you want it
-to follow this workflow on a project. It is **not** auto-loaded — you
-reference it explicitly. Pick whichever fits your setup:
+`claude-instructions.md` is the workflow spec for Claude.
+
+**Automatic (recommended):** the `jupyter-pair` skill in the `claude-setup`
+repo tells every Claude session to read this file whenever it touches a
+notebook or a paired `.py`. Run that repo's setup script once per machine and
+there is nothing else to do.
+
+**By hand**, on a machine without the skill:
 
 - Point Claude at it directly in chat: *"Read `path/to/vscode-jupyter-pair/claude-instructions.md` and follow it for this project."*
 - Or, in your project's existing `CLAUDE.md` (if you have one), add a single line: `Follow the jupytext workflow described in [path/to/vscode-jupyter-pair/claude-instructions.md].`
